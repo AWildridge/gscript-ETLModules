@@ -5,7 +5,6 @@ LOADCONFIG
 LOADCONFIG "" Scripts\ETLModules\ThroughPut\TP_Config.txt
 LOADCONFIG "" Config\ETL\TP_Site_Config.txt
 
-COPY $neg45 -45   # Used in the condition of the extra head rotation mitigation block.
 FLEXREAD $high_int default.light_high_int 40
 FLEXREAD $low_int default.light_low_int 40
 
@@ -115,7 +114,7 @@ END
     ADD $bp_target_pos $pcb_pos $top_offset
 
     # Extra head rotation mitigation between UNL and FNAL.
-    GOTOIF @PCB_ROT_NO_CHANGE `$pcb_rot>$neg45`
+    GOTOIF @PCB_ROT_NO_CHANGE `$pcb_rot>-45`
     ADD $bp_init_rot $bp_init_rot 90
     ADD $pcb_rot $pcb_rot 90
     @PCB_ROT_NO_CHANGE
