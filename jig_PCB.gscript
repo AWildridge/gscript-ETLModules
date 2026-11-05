@@ -1,0 +1,8 @@
+GETINTPOPUP $_ "Set the PCB on the bottom half of the jig."
+setvac port_22 1 #bottom half
+GETINTPOPUP $_ "Set the film on the top half of the jig."
+setvac port_24 1 #top half
+GETINTPOPUP $_ "Apply the film on the PCB."
+setvac port_24 0 #top half
+GETINTPOPUP $_ "Open the cover."
+setvac port_22 0 #bottom half

@@ -1,0 +1,16 @@
+CLEARLOG
+LOADCONFIG "" Config\ETL\TP_Site_Config.txt
+COPY $i 0
+@LOOP
+INC $i $i
+COPY $j 0
+@LOOOP
+INC $j $j
+COPY $q &default.Module_PCB.{$i}.{$j}.rot
+QUAT2EULER $Y $P $R $q
+SUB $Y $Y 180
+EULER2QUAT $q_ $Y $P $R
+XPRINT "{$i}, {$j}, %q" $q_
+GOTOIF @LOOOP `$j<4`
+GOTOIF @LOOP `$i<3`
+END

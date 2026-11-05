@@ -1,5 +1,5 @@
 # This script is to configure the gantry's tool_holder_offset (ghco) vector in the flex_config
-VERSION v2.2
+VERSION v2.5
 CLEARLOG
 LOADCONFIG
 LOADCONFIG "" Config\etl_assembly_positions.txt
@@ -10,9 +10,9 @@ HOME if-needed
 SETVAC gantry_head_inner 0
 
 COPY $bot_chuck_num 2
-COPY $target_pos {77.968,205.635,86.999}
+COPY $target_pos {227.949682,420.396222,45.029520}
 
-COPY $top_chuck_num 1
+COPY $top_chuck_num 4
 COPY $top_pos_num 5
 
 COPY $iterations 6
