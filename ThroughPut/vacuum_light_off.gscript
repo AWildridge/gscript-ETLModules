@@ -1,0 +1,8 @@
+SETLIGHT 0
+MPGOFF
+CHOICEPOPUP $c "Turn vacuums off? (Check gantry head!)" "Yay" "Nay"
+GOTOIFN @CONTINUE $c
+SETVAC * 0
+@CONTINUE
+CHOICEPOPUP $c "Home before turning off the gantry." "Ok" "Ok"
+END

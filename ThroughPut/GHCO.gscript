@@ -1,0 +1,67 @@
+LOADCONFIG "" Scripts\ETLModules\ThroughPut\TP_Config.txt
+LOADCONFIG "" Config\ETL\TP_Site_Config.txt
+
+FLEXREAD $tool_offset geometry.etl_picker_tool.center_offset
+FLEXREAD $tool_holder_offset geometry.tool_holder_offset
+ADD $offset_x $tool_offset.x $tool_holder_offset.x
+ADD $offset_y $tool_offset.y $tool_holder_offset.y
+ADD $offset_z $tool_offset.z $tool_holder_offset.z
+
+MPGON
+
+COPY $i 0
+@LOOP
+VIDEO
+GETPOS $tl
+MOVEREL {19,0,0} 30
+VIDEO
+GETPOS $tr
+MOVEREL {0,19.5,0} 30
+VIDEO
+GETPOS $br
+MOVEREL {-19,0,0} 30
+VIDEO
+GETPOS $bl
+FIT $pos $rot $_ ETROC $tr $br $bl $tl
+COPY [$i] $pos
+COPY $p0 [0]
+MOVETO $p0
+
+MOVEREL {0,0,-0.3} 1
+
+MUL $offset_x $offset_x -1
+MUL $offset_y $offset_y -1
+MUL $offset_z $offset_z -1
+
+MOVEREL {$offset_x,$offset_y,0} 50
+MOVEREL {0,0,$offset_z} 10
+SETVAC gantry_head_inner 1
+WAIT 1000
+MOVEREL {0,0,-5} 2
+ROTATE 60 60
+MOVEREL {0,0,5} 2
+SETVAC gantry_head_inner 0
+WAIT 1000
+
+MUL $offset_x $offset_x -1
+MUL $offset_y $offset_y -1
+MUL $offset_z $offset_z -1
+
+MOVEREL {0,0,$offset_z} 10
+ROTATE -60 60
+MOVEREL {$offset_x,$offset_y,0} 50
+
+MOVEREL {0,0,0.3} 1
+
+INC $i $i
+GOTOIF @LOOP `$i<6`
+
+FITCIRCLE $p $r $_ 0 6
+
+XPRINT %v $p
+XPRINT %f $r
+
+
+
+UNLOADTOOL
+MPGOFF
